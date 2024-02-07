@@ -1,15 +1,15 @@
 <?php
 // Food Menu
 $menu = [
-    1 => ["1: Hot Dog" => 4.00,
+    1 => ["1: Hot Dog" => 2.50,
     "quantity" => 0],
-    2 => ["2: Pizza Slice" => 3.00,
+    2 => ["2: Pizza Slice" => 3.50,
     "quantity" => 0],
-    3 => ["3: Hamburger" => 6.00,
+    3 => ["3: Hamburger" => 5.00,
     "quantity" => 0],
     4 => ["4: Fries" => 2.00,
     "quantity" => 0],
-    5 => ["5: Soda" => 1.50,
+    5 => ["5: Soda" => 2.00,
     "quantity" => 0],
     6 => ["6: Water" => 1.00,
     "quantity" => 0]
@@ -23,16 +23,20 @@ function order() {
     foreach ($menu as $item) {
         $total += $item[key($item)] * $item['quantity'];
     }
+    if ($total == 0) {
+        print("You have not ordered anything.\n");
+        readline("Press enter to continue.");
+        return;
+    }
     print("Subtotal: $" . $total . "\n");
-    print("Tax: $" . $total * 0.055 . "\n");
-    print("Total: $" . $total * 1.055 . "\n");
+    print("Tax: $" . round($total * 0.055, 2) . "\n");
+    print("Total: $" . round($total * 1.055, 2) . "\n");
 }
 
 // clears the quantity of each item
 function clear() {
     global $menu;
     foreach ($menu as $key => $value) {
-        print($key);
         $menu[$key]['quantity'] = 0;
     }
 }
@@ -56,6 +60,7 @@ while (true) {
     }
 
     // prints the options
+    print("\n5.5% sales tax will be added to your order.\n");
     print("\n< - Options - >\n");
     print("a: Order\n");
     print("b: Clear\n");
@@ -114,7 +119,12 @@ while (true) {
             break;
         
         case "c":
-            exit();
+            $txt = readline("Are you sure you want to exit? (y/n)\n");
+            if ($txt == "y") {
+                exit();
+            } else {
+                break;
+            }
 
         default:
             // if the option is invalid, the user is prompted to enter a valid option
