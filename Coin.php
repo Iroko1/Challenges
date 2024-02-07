@@ -97,11 +97,13 @@ While (true) {
         print("New record for heads!: $records[0]\n");
         print("Old record: $Hmax\n");
         $csv[0][1] = $records[0];
+        $Hmax = $records[0];
     }
     if ($records[1] > $Tmax) {
         print("New record for tails!: $records[1]\n");
         print("Old record: $Tmax\n");
         $csv[1][1] = $records[1];
+        $Tmax = $records[1];
     }
 
     // writes the new records to the csv file
